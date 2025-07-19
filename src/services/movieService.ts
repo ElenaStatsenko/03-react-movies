@@ -4,10 +4,11 @@ import type { Movie } from "../types/movie";
 interface MovieSearchResponse {
   results: Movie[];
 }
+const myKey = import.meta.env.VITE_API_KEY;
 const tmdb = axios.create({
   baseURL: "https://api.themoviedb.org/3",
   headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZmNkNGNiOGM3MmY4ZjVkZjY4ZDk4MjVmNDg4NTQ3MyIsIm5iZiI6MTcyMjA4Mjk5Mi4yMjIwMDAxLCJzdWIiOiI2NmE0ZTZiMDUxZmRhYzVjODMwY2NiMjkiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Zq1um5PhtoD7U31owBPkJqFgW0uIUlE_pgXXkPbLdNA`,
+    Authorization: `Bearer ${myKey}`,
     accept: "application/json",
   },
 });

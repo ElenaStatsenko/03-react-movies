@@ -19,6 +19,8 @@ export default function App() {
     try {
       setIsLoading(true);
       setIsError(false);
+      setMovies([]);
+
       const moviesRequestResult = await fetchMovies(data);
       setMovies(moviesRequestResult);
 

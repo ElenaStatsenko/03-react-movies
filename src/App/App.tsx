@@ -4,8 +4,9 @@ import { toast } from "react-hot-toast";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import axios from "axios";
-import React, { useState } from "react";
+import  { useState } from "react";
 import type { Movie } from "../types/movie";
+import MovieGrid from "../MovieGrid/MovieGrid";
 
 const tmdb = axios.create({
   baseURL: "https://api.themoviedb.org/3",
@@ -21,28 +22,36 @@ interface MovieSearchResponse {
   total_pages: number;
 }
 
+
+//     }
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+   const [isLoading, setIsLoading] = useState(false);
+   const [isError, setIsError] = useState(false);
 
   const handlerSearchForm = async (data: string) => {
-    if (data === "") {
+     try { if (data === "") {
       toast.error("Please enter your search query.");
       return;
     }
     console.log("Посик значения", data);
+     setIsLoading(true);
 
     const response = await tmdb.get<MovieSearchResponse>("/search/movie", {
       params: { query: data },
     });
-    console.log(response.data.results);
+     setIsLoading(false);
+    setMovies(response.data.results);} catch { setIsError(true)} finally {setIsLoading(false);}
   };
 
   return (
     <>
-      <Toaster position="top-right" />
-      <Loader />
-      <ErrorMessage />
+      <Toaster position="top-left" />
+      <Loader isLoading={isLoading}/>
+      <ErrorMessage isError={isError}/>
       <SearchBar onSubmit={handlerSearchForm} />
+       {movies.length > 0 && <MovieGrid movies={movies}/> }
+     
     </>
   );
 }

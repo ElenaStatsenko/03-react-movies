@@ -1,4 +1,8 @@
 import css from "./ErrorMessage.module.css";
-export default function ErrorMessage() {
-  return <p className={css.text}>There was an error, please try again...</p>;
+interface IsErrorProps {
+  isError: boolean
+}
+export default function ErrorMessage({isError}: IsErrorProps) {
+    if (!isError) return null;
+  return <p className={css.text}> {isError}There was an error, please try again...</p>;
 }

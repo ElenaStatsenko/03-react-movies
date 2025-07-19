@@ -1,19 +1,25 @@
 import css from "./MovieGrid.module.css";
-export default function MovieGrid() {
-    return(
-        <ul className={css.grid}>
-  {/* Набір елементів списку з фільмами */}
-  <li>
-    <div className={css.card}>
-      <img 
-		    className={css.image} 
-		    src="https://image.tmdb.org/t/p/w500/poster-path" 
-		    alt="movie title" 
-		    loading="lazy" 
-		  />
-	    <h2 className={css.title}>Movie title</h2>
-    </div>
-  </li>
-</ul>
-    )
+import type { Movie } from "../types/movie";
+
+interface MovieListProps {
+  movies: Movie[];
+}
+export default function MovieGrid({ movies }: MovieListProps) {
+  return (
+    <ul className={css.grid}>
+      {movies.map((movie) => (
+        <li key={movie.id}>
+          <div className={css.card}>
+            <img
+              className={css.image}
+              src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+              alt={movie.title}
+              loading="lazy"
+            />
+            <h2 className={css.title}>{movie.title}</h2>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
 }

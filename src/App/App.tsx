@@ -18,7 +18,10 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedMovie(null);
+  };
 
   const openModal = (movie: Movie) => {
     setSelectedMovie(movie);
